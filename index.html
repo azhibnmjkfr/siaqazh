@@ -17,7 +17,6 @@
 
     <div id="loadingScreen" aria-live="polite" aria-busy="true">
         <div class="loading-wrap">
-
             <div class="seal">
                 <svg class="seal-ring" viewBox="0 0 200 200" aria-hidden="true">
                     <circle class="seal-track" cx="100" cy="100" r="88" />
@@ -52,11 +51,14 @@
     <header class="header" id="headerHome">
         <div class="header-inner">
             <div class="header-left">
-                <div class="header-brand">
+                <button class="header-back" id="headerBack" aria-label="Kembali" hidden>
+                    <i data-lucide="chevron-left"></i>
+                </button>
+                <button class="header-brand" id="brandHome" aria-label="Beranda">
                     <span class="brand-mark">SIAQ</span>
                     <span class="brand-divider"></span>
                     <span class="brand-label">Rekap Mengajar</span>
-                </div>
+                </button>
                 <div class="header-meta">
                     <span>Ahmad Zaman Huri</span>
                     <span class="meta-sep">·</span>
