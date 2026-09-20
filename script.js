@@ -357,6 +357,10 @@ function renderRekap() {
                 <div class="cell-num">${num(r['CLUB'])}</div>
                 <div class="cell-badge"><span class="badge success">${success}</span></div>
                 <div class="cell-badge"><span class="badge pending">${pending}</span></div>
+                <div class="rekap-mobile-info">
+                    <div class="rkm-line"><span>Success:</span> ${success}</div>
+                    <div class="rkm-line"><span>Pending:</span> ${pending}</div>
+                </div>
                 <div class="cell-arrow"><i data-lucide="chevron-right"></i></div>
             </div>`;
     }).join('');
