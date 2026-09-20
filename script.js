@@ -1,7 +1,3 @@
-// ============================================================
-// script.js — Rekap Mengajar SIAQ
-// ============================================================
-
 const CONFIG = {
     SHEET_ID: '1YBFPTE_TaE5n5FJrmE9RY5i7_ZWdAPVi2cEss-diNy8',
     FEE: {
@@ -67,9 +63,6 @@ function showLoadingError(msg) {
 
 if (loadingRetry) loadingRetry.addEventListener('click', () => location.reload());
 
-// ============================================================
-// HELPERS
-// ============================================================
 function clean(str) {
     return (str || '').trim().replace(/^"|"$/g, '');
 }
@@ -121,9 +114,6 @@ function sortByTanggalDesc(arr) {
     });
 }
 
-// ============================================================
-// CSV PARSER
-// ============================================================
 function parseCSV(text) {
     const lines = text.split('\n').filter(l => l.trim());
     if (lines.length < 2) return [];
@@ -164,9 +154,6 @@ function parseCSVRaw(text) {
     return rows;
 }
 
-// ============================================================
-// FETCH
-// ============================================================
 async function fetchAll() {
     setLoadingStage('Menghubungi server', 12);
     const urls = [JADWAL_URL, REKAP_URL, FEE_DONE_URL, FEE_PENDING_URL];
@@ -185,9 +172,6 @@ async function fetchAll() {
     };
 }
 
-// ============================================================
-// EXTRACT FEE
-// ============================================================
 function extractFee(rows) {
     const classes = [];
     const club = [];
@@ -220,9 +204,6 @@ function extractFee(rows) {
     return { classes, club, classesTotal, clubTotal };
 }
 
-// ============================================================
-// STATS
-// ============================================================
 function updateStats(jadwal, rekap) {
     const totalP = jadwal.length;
     const totalJ = rekap.reduce((s, r) => s + num(r['TOTAL JAM']), 0);
@@ -243,24 +224,30 @@ function updateStats(jadwal, rekap) {
     });
 }
 
-// ============================================================
-// DROPDOWN BULAN
-// ============================================================
 function populateDropdowns(jadwal) {
     const months = [...new Set(jadwal.map(r => r.PERIODE).filter(Boolean))].sort();
     ['filterSemua', 'filterReguler', 'filterClub'].forEach(id => {
         const sel = $(id);
         if (!sel) return;
         const cur = sel.value;
-        sel.innerHTML = `<option value="">Pilih bulan</option><option value="all">Semua bulan</option>`;
+        sel.innerHTML = `<option value="all">Semua bulan</option><option value="">Pilih bulan</option>`;
         for (const m of months) sel.innerHTML += `<option value="${m}">${m}</option>`;
         if (cur && [...sel.options].some(o => o.value === cur)) sel.value = cur;
+        else sel.value = 'all';
     });
 }
 
-// ============================================================
-// FILTER JADWAL
-// ============================================================
+function updateCaption(tab, count) {
+    const cap = tab.charAt(0).toUpperCase() + tab.slice(1);
+    const el = $(`caption${cap}`);
+    if (!el) return;
+    const select = $(`filter${cap}`);
+    const month = select ? select.value : 'all';
+    const monthLabel = (!month || month === 'all') ? 'Semua bulan' : month;
+    const tabLabel = tab === 'semua' ? 'Semua' : cap;
+    el.textContent = `${tabLabel} · ${monthLabel} · ${count} sesi`;
+}
+
 function applyFilter(tab) {
     const cap = tab.charAt(0).toUpperCase() + tab.slice(1);
     const select = $(`filter${cap}`);
@@ -272,17 +259,9 @@ function applyFilter(tab) {
 
     if (!wrap) return;
 
-    const selectedMonth = select ? select.value : '';
+    const selectedMonth = select ? select.value : 'all';
     const fromVal = from ? from.value : '';
     const toVal = to ? to.value : '';
-
-    if (!selectedMonth && !fromVal && !toVal) {
-        wrap.hidden = true;
-        empty.hidden = false;
-        return;
-    }
-
-    empty.hidden = true;
 
     let data = [...allJadwal];
     if (tab === 'reguler') data = data.filter(r => r.KETERANGAN === 'Reguler');
@@ -305,16 +284,21 @@ function applyFilter(tab) {
         });
     }
 
+    if (!data.length) {
+        wrap.hidden = true;
+        empty.hidden = false;
+        updateCaption(tab, 0);
+        return;
+    }
+
+    empty.hidden = true;
     wrap.hidden = false;
     renderJadwalRows(tbody, data);
+    updateCaption(tab, data.length);
 }
 
 function renderJadwalRows(tbody, data) {
     if (!tbody) return;
-    if (!data.length) {
-        tbody.innerHTML = `<div class="data-loading">Tidak ada data pada rentang ini.</div>`;
-        return;
-    }
     const sorted = sortByTanggalDesc(data);
     tbody.innerHTML = sorted.map(r => {
         const dataAttr = escapeHtml(JSON.stringify(r));
@@ -345,18 +329,12 @@ function resetFilter(tab) {
     const select = $(`filter${cap}`);
     const from = $(`from${cap}`);
     const to = $(`to${cap}`);
-    const wrap = $(`table${cap}Wrap`);
-    const empty = $(`empty${cap}`);
-    if (select) select.value = '';
+    if (select) select.value = 'all';
     if (from) from.value = '';
     if (to) to.value = '';
-    if (wrap) wrap.hidden = true;
-    if (empty) empty.hidden = false;
+    applyFilter(tab);
 }
 
-// ============================================================
-// REKAP
-// ============================================================
 function renderRekap() {
     const list = $('rekapList');
     if (!list) return;
@@ -395,9 +373,6 @@ function renderRekap() {
     if (typeof lucide !== 'undefined') lucide.createIcons();
 }
 
-// ============================================================
-// SALARY
-// ============================================================
 function currentFeeData() {
     const src = salaryStatus === 'success' ? feeDone : feePending;
     const arr = salaryKategori === 'classes' ? src.classes : src.club;
@@ -469,9 +444,6 @@ function filterSalaryByDate(data) {
     });
 }
 
-// ============================================================
-// MODAL DETAIL
-// ============================================================
 function openModalDetail(d) {
     $('modalDetailTitle').textContent = d.KELAS || 'Sesi';
     $('mdTanggal').textContent = d.TANGGAL || '-';
@@ -483,9 +455,6 @@ function openModalDetail(d) {
     openModal('modalDetail');
 }
 
-// ============================================================
-// MODAL REKAP
-// ============================================================
 function openModalRekap(d) {
     const regS = num(d['REGULER SUCCESS']);
     const regP = num(d['REGULER PENDING']);
@@ -510,9 +479,6 @@ function openModalRekap(d) {
     openModal('modalRekap');
 }
 
-// ============================================================
-// MODAL SALARY
-// ============================================================
 function openModalSalary(d) {
     $('msEyebrow').textContent = salaryStatus === 'success' ? 'Fee Success' : 'Fee Pending';
     $('msTitle').textContent = d.KELAS || 'Detail';
@@ -525,9 +491,6 @@ function openModalSalary(d) {
     openModal('modalSalary');
 }
 
-// ============================================================
-// MODAL GENERIC
-// ============================================================
 function openModal(id) {
     const el = $(id);
     if (!el) return;
@@ -553,14 +516,8 @@ document.addEventListener('keydown', e => {
     if (e.key === 'Escape') closeAllModals();
 });
 
-// ============================================================
-// PROFILE
-// ============================================================
 $('profileTrigger').addEventListener('click', () => openModal('modalProfile'));
 
-// ============================================================
-// TABS
-// ============================================================
 function switchTab(tab) {
     currentTab = tab;
 
@@ -591,9 +548,6 @@ document.querySelectorAll('.tab').forEach(b => {
     b.addEventListener('click', () => switchTab(b.dataset.tab));
 });
 
-// ============================================================
-// FILTER EVENTS
-// ============================================================
 ['semua', 'reguler', 'club'].forEach(tab => {
     const cap = tab.charAt(0).toUpperCase() + tab.slice(1);
     const select = $(`filter${cap}`);
@@ -606,9 +560,6 @@ document.querySelectorAll('.tab').forEach(b => {
     if (reset) reset.addEventListener('click', () => resetFilter(tab));
 });
 
-// ============================================================
-// SALARY CONTROLS
-// ============================================================
 function setupDropdown(triggerId, menuId, onChange) {
     const trigger = $(triggerId);
     const menu = $(menuId);
@@ -662,9 +613,6 @@ $('salReset').addEventListener('click', () => {
 
 $('salPrint').addEventListener('click', handlePrint);
 
-// ============================================================
-// PRINT
-// ============================================================
 function handlePrint() {
     const data = filterSalaryByDate(currentFeeData());
     const label = salaryKategori === 'classes' ? 'Classes' : 'Club';
@@ -738,18 +686,12 @@ function handlePrint() {
     setTimeout(() => window.print(), 60);
 }
 
-// ============================================================
-// GO TOP
-// ============================================================
 const goTop = $('goTop');
 window.addEventListener('scroll', () => {
     if (goTop) goTop.classList.toggle('visible', window.scrollY > 300);
 });
 if (goTop) goTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
-// ============================================================
-// INIT
-// ============================================================
 async function init() {
     try {
         const { jadwal, rekap, feeDone: fd, feePending: fp } = await fetchAll();
