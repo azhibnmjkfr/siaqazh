@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#FFFFFF" />
+    <meta name="description" content="Rekap kegiatan mengajar Ahmad Zaman Huri — Sekolah Islam Akhlaqul Quran, 2026/2027." />
+    <title>Rekap Mengajar — SIAQ</title>
+
+    <link rel="preconnect" href="https://unpkg.com" />
+    <link rel="preload" as="font" type="font/woff2" href="fonts/Geist%5Bwght%5D.woff2" crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href="fonts/GeistMono%5Bwght%5D.woff2" crossorigin />
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body data-view="home">
+
+    <div id="loadingScreen" aria-live="polite" aria-busy="true">
+        <div class="loading-wrap">
+
+            <div class="seal">
+                <svg class="seal-ring" viewBox="0 0 200 200" aria-hidden="true">
+                    <circle class="seal-track" cx="100" cy="100" r="88" />
+                    <circle class="seal-progress" cx="100" cy="100" r="88" id="sealProgress" />
+                </svg>
+                <div class="seal-center">
+                    <div class="seal-mark">SIAQ</div>
+                    <div class="seal-label">Rekap Mengajar</div>
+                </div>
+                <div class="seal-percent" id="loadingPercent">0%</div>
+            </div>
+
+            <div class="loading-stage-line">
+                <span class="stage-line"></span>
+                <span class="stage-text" id="loadingStage">Menyiapkan</span>
+                <span class="stage-line"></span>
+            </div>
+
+            <div class="loading-meta">
+                <div class="meta-name">Ahmad Zaman Huri</div>
+                <div class="meta-year">Tahun Ajaran 2026 / 2027</div>
+            </div>
+
+            <div class="loading-error" id="loadingError" hidden>
+                <div class="loading-error-title">Gagal memuat data</div>
+                <div class="loading-error-desc" id="loadingErrorDesc">Periksa koneksi lalu coba lagi.</div>
+                <button class="loading-error-retry" id="loadingRetry">Coba Lagi</button>
+            </div>
+        </div>
+    </div>
+
+    <header class="header" id="headerHome">
+        <div class="header-inner">
+            <div class="header-left">
+                <div class="header-brand">
+                    <span class="brand-mark">SIAQ</span>
+                    <span class="brand-divider"></span>
+                    <span class="brand-label">Rekap Mengajar</span>
+                </div>
+                <div class="header-meta">
+                    <span>Ahmad Zaman Huri</span>
+                    <span class="meta-sep">·</span>
+                    <span>2026 / 2027</span>
+                </div>
+            </div>
+            <button class="profile-btn" id="profileTrigger" aria-label="Buka profil">
+                <img src="assets/imgprofile.png" alt="Ahmad Zaman Huri" />
+            </button>
+        </div>
+    </header>
+
+    <main class="container" id="dashboard">
+
+        <section class="mobile-home" id="mobileHome">
+            <div class="mh-greeting">
+                <div class="mh-greet-line" id="heroGreeting">Selamat pagi,</div>
+                <div class="mh-greet-status" id="heroStatus">Memuat data sesi.</div>
+            </div>
+
+            <div class="mh-stats" id="statsGrid">
+                <div class="mh-stat">
+                    <div class="mh-stat-label">Total Jam</div>
+                    <div class="mh-stat-value" id="statJam">—</div>
+                </div>
+                <div class="mh-stat">
+                    <div class="mh-stat-label">Pertemuan</div>
+                    <div class="mh-stat-value" id="statPertemuan">—</div>
+                </div>
+                <div class="mh-stat is-success">
+                    <div class="mh-stat-label">Sudah Diproses</div>
+                    <div class="mh-stat-value" id="statSudah">—</div>
+                </div>
+                <div class="mh-stat is-pending">
+                    <div class="mh-stat-label">Belum Diproses</div>
+                    <div class="mh-stat-value" id="statBelum">—</div>
+                </div>
+            </div>
+
+            <div class="mh-quick">
+                <a href="#salary" class="mh-quick-card" data-nav="salary">
+                    <span class="mh-quick-label">Salary</span>
+                    <span class="mh-quick-cta">Lihat detail fee →</span>
+                </a>
+                <a href="#rekap" class="mh-quick-card" data-nav="rekap">
+                    <span class="mh-quick-label">Rekap</span>
+                    <span class="mh-quick-cta">Ringkasan per bulan →</span>
+                </a>
+            </div>
+        </section>
+
+        <section class="stats-grid" id="statsGridDesktop">
+            <div class="stat-card">
+                <div class="stat-label">Total Jam</div>
+                <div class="stat-value" id="statJamDesktop">—</div>
+                <div class="stat-unit">jam mengajar</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Pertemuan</div>
+                <div class="stat-value" id="statPertemuanDesktop">—</div>
+                <div class="stat-unit">sesi tercatat</div>
+            </div>
+            <div class="stat-card is-success">
+                <div class="stat-label">Sudah Diproses</div>
+                <div class="stat-value" id="statSudahDesktop">—</div>
+                <div class="stat-unit">jam terverifikasi</div>
+            </div>
+            <div class="stat-card is-pending">
+                <div class="stat-label">Belum Diproses</div>
+                <div class="stat-value" id="statBelumDesktop">—</div>
+                <div class="stat-unit">jam menunggu</div>
+            </div>
+        </section>
+
+        <nav class="tabs" id="navTabs" role="tablist">
+            <button role="tab" class="tab active" data-tab="semua">Semua</button>
+            <button role="tab" class="tab" data-tab="reguler">Reguler</button>
+            <button role="tab" class="tab" data-tab="club">Club</button>
+            <button role="tab" class="tab" data-tab="rekap">Rekap</button>
+            <button role="tab" class="tab" data-tab="salary">Salary</button>
+        </nav>
+
+        <div class="content" id="contentArea">
+
+            <section class="panel" id="panelSemua" role="tabpanel">
+                <div class="filter-bar">
+                    <div class="filter-field">
+                        <label for="filterSemua">Periode</label>
+                        <select class="field-select" id="filterSemua">
+                            <option value="">Pilih bulan</option>
+                        </select>
+                    </div>
+                    <div class="filter-field">
+                        <label>Rentang Tanggal</label>
+                        <div class="date-range">
+                            <input type="date" id="fromSemua" class="field-date" aria-label="Dari" />
+                            <span class="date-sep">→</span>
+                            <input type="date" id="toSemua" class="field-date" aria-label="Sampai" />
+                        </div>
+                    </div>
+                    <button class="btn-ghost" id="resetSemua">Reset</button>
+                </div>
+                <div class="data-table" id="tableSemuaWrap" hidden>
+                    <div class="data-head">
+                        <div class="col col-date">Tanggal</div>
+                        <div class="col col-day">Hari</div>
+                        <div class="col col-class">Kelas</div>
+                        <div class="col col-hour">Jam</div>
+                        <div class="col col-arrow"></div>
+                    </div>
+                    <div class="data-body" id="tableSemua"></div>
+                </div>
+                <div class="empty" id="emptySemua">
+                    <div class="empty-title">Pilih periode</div>
+                    <div class="empty-desc">Pilih bulan atau rentang tanggal untuk menampilkan jadwal.</div>
+                </div>
+            </section>
+
+            <section class="panel" id="panelReguler" role="tabpanel" hidden>
+                <div class="filter-bar">
+                    <div class="filter-field">
+                        <label for="filterReguler">Periode</label>
+                        <select class="field-select" id="filterReguler">
+                            <option value="">Pilih bulan</option>
+                        </select>
+                    </div>
+                    <div class="filter-field">
+                        <label>Rentang Tanggal</label>
+                        <div class="date-range">
+                            <input type="date" id="fromReguler" class="field-date" aria-label="Dari" />
+                            <span class="date-sep">→</span>
+                            <input type="date" id="toReguler" class="field-date" aria-label="Sampai" />
+                        </div>
+                    </div>
+                    <button class="btn-ghost" id="resetReguler">Reset</button>
+                </div>
+                <div class="data-table" id="tableRegulerWrap" hidden>
+                    <div class="data-head">
+                        <div class="col col-date">Tanggal</div>
+                        <div class="col col-day">Hari</div>
+                        <div class="col col-class">Kelas</div>
+                        <div class="col col-hour">Jam</div>
+                        <div class="col col-arrow"></div>
+                    </div>
+                    <div class="data-body" id="tableReguler"></div>
+                </div>
+                <div class="empty" id="emptyReguler">
+                    <div class="empty-title">Pilih periode</div>
+                    <div class="empty-desc">Pilih bulan atau rentang tanggal untuk menampilkan jadwal reguler.</div>
+                </div>
+            </section>
+
+            <section class="panel" id="panelClub" role="tabpanel" hidden>
+                <div class="filter-bar">
+                    <div class="filter-field">
+                        <label for="filterClub">Periode</label>
+                        <select class="field-select" id="filterClub">
+                            <option value="">Pilih bulan</option>
+                        </select>
+                    </div>
+                    <div class="filter-field">
+                        <label>Rentang Tanggal</label>
+                        <div class="date-range">
+                            <input type="date" id="fromClub" class="field-date" aria-label="Dari" />
+                            <span class="date-sep">→</span>
+                            <input type="date" id="toClub" class="field-date" aria-label="Sampai" />
+                        </div>
+                    </div>
+                    <button class="btn-ghost" id="resetClub">Reset</button>
+                </div>
+                <div class="data-table" id="tableClubWrap" hidden>
+                    <div class="data-head">
+                        <div class="col col-date">Tanggal</div>
+                        <div class="col col-day">Hari</div>
+                        <div class="col col-class">Kelas</div>
+                        <div class="col col-hour">Jam</div>
+                        <div class="col col-arrow"></div>
+                    </div>
+                    <div class="data-body" id="tableClub"></div>
+                </div>
+                <div class="empty" id="emptyClub">
+                    <div class="empty-title">Pilih periode</div>
+                    <div class="empty-desc">Pilih bulan atau rentang tanggal untuk menampilkan jadwal club.</div>
+                </div>
+            </section>
+
+            <section class="panel" id="panelRekap" role="tabpanel" hidden>
+                <div class="data-table" id="rekapWrap">
+                    <div class="data-head rekap-head">
+                        <div class="col">Periode</div>
+                        <div class="col col-num">Total</div>
+                        <div class="col col-num">Reguler</div>
+                        <div class="col col-num">Club</div>
+                        <div class="col col-num">Success</div>
+                        <div class="col col-num">Pending</div>
+                        <div class="col col-arrow"></div>
+                    </div>
+                    <div class="data-body" id="rekapList"></div>
+                </div>
+            </section>
+
+            <section class="panel" id="panelSalary" role="tabpanel" hidden>
+                <div class="salary-controls">
+                    <div class="salary-dropdown" data-dd="status">
+                        <button class="dd-trigger" id="ddStatusBtn">
+                            <span class="dd-label">Status</span>
+                            <span class="dd-value" id="ddStatusValue">Success</span>
+                            <i data-lucide="chevron-down"></i>
+                        </button>
+                        <div class="dd-menu" id="ddStatusMenu">
+                            <button data-value="success" class="dd-item active">Success</button>
+                            <button data-value="pending" class="dd-item">Pending</button>
+                        </div>
+                    </div>
+                    <div class="salary-dropdown" data-dd="kategori">
+                        <button class="dd-trigger" id="ddKategoriBtn">
+                            <span class="dd-label">Kategori</span>
+                            <span class="dd-value" id="ddKategoriValue">Classes</span>
+                            <i data-lucide="chevron-down"></i>
+                        </button>
+                        <div class="dd-menu" id="ddKategoriMenu">
+                            <button data-value="classes" class="dd-item active">Classes</button>
+                            <button data-value="club" class="dd-item">Club</button>
+                        </div>
+                    </div>
+                    <div class="salary-range">
+                        <div class="date-range">
+                            <input type="date" id="salFrom" class="field-date" aria-label="Dari" />
+                            <span class="date-sep">→</span>
+                            <input type="date" id="salTo" class="field-date" aria-label="Sampai" />
+                        </div>
+                    </div>
+                    <div class="salary-actions">
+                        <button class="btn-ghost" id="salReset">Reset</button>
+                        <button class="btn-primary" id="salPrint">
+                            <i data-lucide="printer"></i> Cetak
+                        </button>
+                    </div>
+                </div>
+
+                <div class="salary-summary">
+                    <div class="sal-sum-block">
+                        <div class="sal-sum-label">Kategori</div>
+                        <div class="sal-sum-value" id="salKategoriLabel">Classes</div>
+                    </div>
+                    <div class="sal-sum-block">
+                        <div class="sal-sum-label">Jumlah</div>
+                        <div class="sal-sum-value" id="salCount">0 data</div>
+                    </div>
+                    <div class="sal-sum-block sal-sum-total">
+                        <div class="sal-sum-label">Total Fee</div>
+                        <div class="sal-sum-value" id="salTotal">Rp0</div>
+                    </div>
+                </div>
+
+                <div class="data-table" id="salaryWrap">
+                    <div class="data-head">
+                        <div class="col col-date">Tanggal</div>
+                        <div class="col col-day">Hari</div>
+                        <div class="col col-class">Kelas</div>
+                        <div class="col col-num">JP</div>
+                        <div class="col col-num">Amount</div>
+                        <div class="col col-arrow"></div>
+                    </div>
+                    <div class="data-body" id="salaryList"></div>
+                </div>
+
+                <div class="empty" id="salaryEmpty" hidden>
+                    <div class="empty-title">Tidak ada data</div>
+                    <div class="empty-desc">Belum ada data pada filter ini.</div>
+                </div>
+            </section>
+        </div>
+
+        <div class="footer-credit">created by Azhibnmjkfr</div>
+    </main>
+
+    <nav class="bottom-nav" id="bottomNav" aria-label="Navigasi utama">
+        <button class="bn-btn active" data-nav="home">
+            <i data-lucide="home"></i><span>Beranda</span>
+        </button>
+        <button class="bn-btn" data-nav="reguler">
+            <i data-lucide="book-open"></i><span>Reguler</span>
+        </button>
+        <button class="bn-btn" data-nav="club">
+            <i data-lucide="users"></i><span>Club</span>
+        </button>
+        <button class="bn-btn" data-nav="rekap">
+            <i data-lucide="bar-chart-2"></i><span>Rekap</span>
+        </button>
+        <button class="bn-btn" data-nav="salary">
+            <i data-lucide="wallet"></i><span>Salary</span>
+        </button>
+    </nav>
+
+    <div class="modal" id="modalDetail" role="dialog" aria-modal="true">
+        <div class="modal-box">
+            <button class="modal-close" id="modalDetailClose" aria-label="Tutup"><i data-lucide="x"></i></button>
+            <div class="modal-head">
+                <div class="modal-eyebrow">Detail Sesi</div>
+                <div class="modal-title" id="modalDetailTitle">—</div>
+            </div>
+            <div class="modal-list">
+                <div class="modal-row"><span>Tanggal</span><strong id="mdTanggal">-</strong></div>
+                <div class="modal-row"><span>Hari</span><strong id="mdHari">-</strong></div>
+                <div class="modal-row"><span>Kelas</span><strong id="mdKelas">-</strong></div>
+                <div class="modal-row"><span>Jam</span><strong id="mdJam">-</strong></div>
+                <div class="modal-row"><span>Materi</span><strong id="mdMateri">-</strong></div>
+                <div class="modal-row"><span>Keterangan</span><strong id="mdKet">-</strong></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="modalRekap" role="dialog" aria-modal="true">
+        <div class="modal-box">
+            <button class="modal-close" id="modalRekapClose" aria-label="Tutup"><i data-lucide="x"></i></button>
+            <div class="modal-head">
+                <div class="modal-eyebrow">Detail Rekap</div>
+                <div class="modal-title" id="modalRekapTitle">—</div>
+            </div>
+            <div class="modal-list">
+                <div class="modal-section-title is-success">Sudah Diproses</div>
+                <div class="modal-row"><span>Reguler</span><strong id="mrRegSuccess">-</strong></div>
+                <div class="modal-row modal-row-sub"><span>Fee</span><strong id="mrRegSuccessFee">-</strong></div>
+                <div class="modal-row"><span>Club</span><strong id="mrClubSuccess">-</strong></div>
+                <div class="modal-row modal-row-sub"><span>Fee</span><strong id="mrClubSuccessFee">-</strong></div>
+                <div class="modal-row modal-row-total is-success"><span>Total</span><strong id="mrTotalSuccess">-</strong></div>
+
+                <div class="modal-section-title is-pending">Belum Diproses</div>
+                <div class="modal-row"><span>Reguler</span><strong id="mrRegPending">-</strong></div>
+                <div class="modal-row modal-row-sub"><span>Fee</span><strong id="mrRegPendingFee">-</strong></div>
+                <div class="modal-row"><span>Club</span><strong id="mrClubPending">-</strong></div>
+                <div class="modal-row modal-row-sub"><span>Fee</span><strong id="mrClubPendingFee">-</strong></div>
+                <div class="modal-row modal-row-total is-pending"><span>Total</span><strong id="mrTotalPending">-</strong></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="modalSalary" role="dialog" aria-modal="true">
+        <div class="modal-box">
+            <button class="modal-close" id="modalSalaryClose" aria-label="Tutup"><i data-lucide="x"></i></button>
+            <div class="modal-head">
+                <div class="modal-eyebrow" id="msEyebrow">Detail Fee</div>
+                <div class="modal-title" id="msTitle">—</div>
+            </div>
+            <div class="modal-list">
+                <div class="modal-row"><span>Tanggal</span><strong id="msTanggal">-</strong></div>
+                <div class="modal-row"><span>Hari</span><strong id="msHari">-</strong></div>
+                <div class="modal-row"><span>Kelas</span><strong id="msKelas">-</strong></div>
+                <div class="modal-row"><span>JP</span><strong id="msJp">-</strong></div>
+                <div class="modal-row"><span>Status</span><strong id="msStat">-</strong></div>
+                <div class="modal-row"><span>Amount</span><strong id="msAmount">-</strong></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="modalProfile" role="dialog" aria-modal="true">
+        <div class="modal-box modal-profile">
+            <button class="modal-close" id="modalProfileClose" aria-label="Tutup"><i data-lucide="x"></i></button>
+            <div class="profile-avatar-lg">
+                <img src="assets/imgprofile.png" alt="Ahmad Zaman Huri" />
+            </div>
+            <h2 class="profile-name">Ahmad Zaman Huri</h2>
+            <p class="profile-role">Guru Bahasa Inggris</p>
+            <p class="profile-school">Sekolah Islam Akhlaqul Quran</p>
+            <div class="profile-divider"></div>
+            <div class="profile-info">
+                <div class="profile-info-row"><i data-lucide="mail"></i><span>ahmadzamanhuri.jakfar@gmail.com</span></div>
+                <div class="profile-info-row"><i data-lucide="phone"></i><span>+62 822-4607-7303</span></div>
+                <div class="profile-info-row"><i data-lucide="map-pin"></i><span>Keutapang, Aceh Besar</span></div>
+            </div>
+            <div class="profile-divider"></div>
+            <p class="profile-quote">"Mengajar bukan hanya tentang memberi tahu,<br />tapi tentang menumbuhkan rasa ingin tahu."</p>
+            <a href="https://wa.me/6282246077307" class="btn-primary profile-wa" target="_blank" rel="noopener">
+                <i data-lucide="message-circle"></i> Hubungi via WhatsApp
+            </a>
+        </div>
+    </div>
+
+    <button class="go-top" id="goTop" aria-label="Kembali ke atas"><i data-lucide="chevron-up"></i></button>
+
+    <div id="printArea"></div>
+
+    <script src="script.js"></script>
+    <script src="ui.js"></script>
+</body>
+</html>

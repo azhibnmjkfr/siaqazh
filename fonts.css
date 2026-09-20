@@ -1,0 +1,52 @@
+/* ============================================================
+   fonts.css — Geist Family (Variable)
+   Terpusat · Ringan · Offline-safe
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   1. Geist Sans (Variable, weight 100–900)
+   Untuk: body, UI, tabel, tombol, judul section
+   ------------------------------------------------------------ */
+@font-face {
+    font-family: 'Geist';
+    src: url('fonts/Geist%5Bwght%5D.woff2') format('woff2-variations');
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* ------------------------------------------------------------
+   2. Geist Mono (Variable, weight 100–900)
+   Untuk: SEMUA angka — nominal, JP, tanggal, stat, kode
+   ------------------------------------------------------------ */
+@font-face {
+    font-family: 'Geist Mono';
+    src: url('fonts/GeistMono%5Bwght%5D.woff2') format('woff2-variations');
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* ------------------------------------------------------------
+   3. Geist Pixel — Square
+   Untuk: monogram "SIAQ", nomor dokumen (stamp resmi)
+   ------------------------------------------------------------ */
+@font-face {
+    font-family: 'Geist Pixel Square';
+    src: url('fonts/GeistPixel-Square.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* ------------------------------------------------------------
+   4. Geist Pixel — Line
+   Untuk: badge kecil, aksen watermark
+   ------------------------------------------------------------ */
+@font-face {
+    font-family: 'Geist Pixel Line';
+    src: url('fonts/GeistPixel-Line.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
