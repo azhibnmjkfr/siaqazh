@@ -673,6 +673,8 @@ button { font: inherit; color: inherit; }
 }
 .data-row.rekap-row .cell-badge { justify-self: end; }
 
+.rekap-mobile-info { display: none; }
+
 .badge {
     display: inline-flex;
     align-items: center;
@@ -1011,7 +1013,6 @@ button { font: inherit; color: inherit; }
 }
 .profile-wa { margin-top: 20px; width: 100%; justify-content: center; padding: 12px 20px; }
 
-/* GO TOP */
 .go-top {
     position: fixed;
     bottom: 28px;
@@ -1318,54 +1319,52 @@ button { font: inherit; color: inherit; }
         justify-self: end;
     }
 
-    /* Rekap mobile — simple: Success X · Pending Y */
+    /* Rekap mobile — 3 baris simple */
     .data-row.rekap-row {
+        display: grid;
         grid-template-columns: 1fr auto;
         grid-template-areas:
-            "period   arrow"
-            "meta     meta";
+            "period  arrow"
+            "info    info";
         gap: 6px 12px;
         padding: 16px 18px;
+        align-items: start;
     }
     .data-row.rekap-row .cell-period {
         grid-area: period;
         font-size: 14px;
+        margin: 0;
+        align-self: center;
     }
-    .data-row.rekap-row .cell-num { display: none; }
-
-    .data-row.rekap-row .cell-badge {
-        grid-area: meta;
-        display: inline-flex;
-        align-items: center;
-        padding: 0;
-        background: transparent;
-        border: none;
-        justify-self: auto;
+    .data-row.rekap-row .cell-num,
+    .data-row.rekap-row .cell-badge { display: none; }
+    .data-row.rekap-row .rekap-mobile-info {
+        grid-area: info;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        margin-top: 2px;
     }
-    .data-row.rekap-row .cell-badge + .cell-badge {
-        margin-left: 16px;
-    }
-    .data-row.rekap-row .cell-badge.success::before {
-        content: 'Success';
+    .data-row.rekap-row .rekap-mobile-info .rkm-line {
+        display: flex;
+        align-items: baseline;
+        gap: 8px;
         font-family: 'Geist Mono', monospace;
+        font-size: 12px;
+        color: var(--ink-2);
+    }
+    .data-row.rekap-row .rekap-mobile-info .rkm-line span {
         font-size: 10px;
         font-weight: 600;
         color: var(--ink-3);
         text-transform: uppercase;
-        letter-spacing: 0.1em;
-        margin-right: 6px;
+        letter-spacing: 0.14em;
+        min-width: 62px;
     }
-    .data-row.rekap-row .cell-badge.pending::before {
-        content: 'Pending';
-        font-family: 'Geist Mono', monospace;
-        font-size: 10px;
-        font-weight: 600;
-        color: var(--ink-3);
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-        margin-right: 6px;
+    .data-row.rekap-row .cell-arrow {
+        grid-area: arrow;
+        align-self: center;
     }
-    .data-row.rekap-row .cell-arrow { grid-area: arrow; }
 
     .salary-controls {
         flex-direction: column;
