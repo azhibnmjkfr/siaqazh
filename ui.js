@@ -3,6 +3,9 @@
 
     const isMobile = () => window.matchMedia('(max-width: 768px)').matches;
 
+    /* ============================================================
+       GREETING
+       ============================================================ */
     const heroGreeting = document.getElementById('heroGreeting');
     if (heroGreeting) {
         const hour = new Date().getHours();
@@ -14,6 +17,9 @@
         heroGreeting.textContent = greeting;
     }
 
+    /* ============================================================
+       VIEW STATE
+       ============================================================ */
     function setView(view) {
         if (!isMobile()) {
             document.body.removeAttribute('data-view');
@@ -24,6 +30,101 @@
     if (isMobile()) setView('home');
     else document.body.removeAttribute('data-view');
 
+    /* ============================================================
+       BOTTOM NAV
+       ============================================================ */
+    const bottomNav = document.getElementById('bottomNav');
+    const navBtns = bottomNav ? bottomNav.querySelectorAll('.bn-btn') : [];
+
+    function activateNav(key) {
+        navBtns.forEach(b => b.classList.toggle('active', b.dataset.nav === key));
+    }
+
+    navBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const nav = btn.dataset.nav;
+
+            if (nav === 'home') {
+                setView('home');
+                activateNav('home');
+                syncBackBtn();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                return;
+            }
+
+            const desktopTab = document.querySelector(`.tab[data-tab="${nav}"]`);
+            if (desktopTab) desktopTab.click();
+
+            setView('tab');
+            activateNav(nav);
+            syncBackBtn();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    });
+
+    /* ============================================================
+       QUICK ACCESS (mobile home)
+       ============================================================ */
+    document.querySelectorAll('.mh-quick-card[data-nav]').forEach(card => {
+        card.addEventListener('click', e => {
+            e.preventDefault();
+            const nav = card.dataset.nav;
+            const desktopTab = document.querySelector(`.tab[data-tab="${nav}"]`);
+            if (desktopTab) desktopTab.click();
+
+            setView('tab');
+            if (nav === 'semua') activateNav('home');
+            else activateNav(nav);
+            syncBackBtn();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    });
+
+    /* ============================================================
+       BRAND → HOME / SEMUA
+       ============================================================ */
+    const brandHome = document.getElementById('brandHome');
+    if (brandHome) {
+        brandHome.addEventListener('click', () => {
+            if (isMobile()) {
+                setView('home');
+                activateNav('home');
+                syncBackBtn();
+            } else {
+                const tabSemua = document.querySelector('.tab[data-tab="semua"]');
+                if (tabSemua) tabSemua.click();
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    }
+
+    /* ============================================================
+       HEADER BACK BUTTON
+       ============================================================ */
+    const headerBack = document.getElementById('headerBack');
+
+    function syncBackBtn() {
+        if (!headerBack) return;
+        if (!isMobile()) {
+            headerBack.hidden = true;
+            return;
+        }
+        const view = document.body.dataset.view;
+        headerBack.hidden = (view !== 'tab');
+    }
+
+    if (headerBack) {
+        headerBack.addEventListener('click', () => {
+            setView('home');
+            activateNav('home');
+            syncBackBtn();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    }
+
+    /* ============================================================
+       COUNT-UP STATS
+       ============================================================ */
     function animateCountUp(el, target, duration = 900) {
         if (!el || isNaN(target)) return;
         const start = performance.now();
@@ -76,6 +177,9 @@
         obs.observe(grid, { subtree: true, childList: true, characterData: true });
     });
 
+    /* ============================================================
+       STAGGER ROWS
+       ============================================================ */
     function applyStagger(container) {
         if (!container || container.dataset.staggered) return;
         const rows = container.querySelectorAll('.data-row');
@@ -104,59 +208,16 @@
         obs.observe(tbody, { childList: true });
     });
 
-    const bottomNav = document.getElementById('bottomNav');
-    const navBtns = bottomNav ? bottomNav.querySelectorAll('.bn-btn') : [];
+    /* ============================================================
+       SYNC BACK BUTTON ON VIEW CHANGE
+       ============================================================ */
+    const viewObserver = new MutationObserver(syncBackBtn);
+    viewObserver.observe(document.body, { attributes: true, attributeFilter: ['data-view'] });
+    syncBackBtn();
 
-    function activateNav(key) {
-        navBtns.forEach(b => b.classList.toggle('active', b.dataset.nav === key));
-    }
-
-    navBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const nav = btn.dataset.nav;
-
-            if (nav === 'home') {
-                setView('home');
-                activateNav('home');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-                return;
-            }
-
-            const desktopTab = document.querySelector(`.tab[data-tab="${nav}"]`);
-            if (desktopTab) desktopTab.click();
-
-            setView('tab');
-            activateNav(nav);
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-    });
-
-    document.querySelectorAll('.mh-quick-card[data-nav]').forEach(card => {
-        card.addEventListener('click', e => {
-            e.preventDefault();
-            const nav = card.dataset.nav;
-            const desktopTab = document.querySelector(`.tab[data-tab="${nav}"]`);
-            if (desktopTab) desktopTab.click();
-
-            setView('tab');
-            if (nav === 'semua') activateNav('home');
-            else activateNav(nav);
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-    });
-
-    let resizeTimer;
-    window.addEventListener('resize', () => {
-        clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(() => {
-            if (!isMobile()) {
-                document.body.removeAttribute('data-view');
-            } else if (!document.body.dataset.view) {
-                setView('home');
-            }
-        }, 200);
-    });
-
+    /* ============================================================
+       HASH ROUTING
+       ============================================================ */
     if (location.hash) {
         const nav = location.hash.replace('#', '');
         if (['semua', 'reguler', 'club', 'rekap', 'salary'].includes(nav)) {
@@ -166,8 +227,25 @@
                 setView('tab');
                 if (nav === 'semua') activateNav('home');
                 else activateNav(nav);
+                syncBackBtn();
             }, 100);
         }
     }
+
+    /* ============================================================
+       RESIZE
+       ============================================================ */
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+            if (!isMobile()) {
+                document.body.removeAttribute('data-view');
+            } else if (!document.body.dataset.view) {
+                setView('home');
+            }
+            syncBackBtn();
+        }, 200);
+    });
 
 })();
