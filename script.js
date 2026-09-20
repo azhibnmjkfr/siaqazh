@@ -13,8 +13,8 @@ const FEE_PENDING_URL = `https://docs.google.com/spreadsheets/d/${CONFIG.SHEET_I
 
 let allJadwal = [];
 let allRekap = [];
-let feeDone = { classes: [], club: [] };
-let feePending = { classes: [], club: [] };
+let feeDone = { classes: [], club: [], subtotalClasses: 0, subtotalClub: 0 };
+let feePending = { classes: [], club: [], subtotalClasses: 0, subtotalClub: 0 };
 let currentTab = 'semua';
 let salaryStatus = 'success';
 let salaryKategori = 'classes';
@@ -175,30 +175,33 @@ async function fetchAll() {
 function extractFee(rows) {
     const classes = [];
     const club = [];
+    let subtotalClasses = 0;
+    let subtotalClub = 0;
+
+    if (rows[0]) {
+        subtotalClasses = num(rows[0][6]);
+        subtotalClub = num(rows[0][14]);
+    }
 
     for (const r of rows) {
         const tglC = r[0] || '', hariC = r[1] || '', kelasC = r[2] || '';
         if (tglC || hariC || kelasC) {
-            const jp = num(r[3]);
-            const amount = num(r[5]);
             classes.push({
                 TANGGAL: tglC, HARI: hariC, KELAS: kelasC,
                 JP: r[3] || '', STAT: r[4] || '',
-                AMOUNT: r[5] || '', TOTAL: jp * amount
+                AMOUNT: r[5] || ''
             });
         }
         const tglK = r[8] || '', hariK = r[9] || '', kelasK = r[10] || '';
         if (tglK || hariK || kelasK) {
-            const jp = num(r[11]);
-            const amount = num(r[13]);
             club.push({
                 TANGGAL: tglK, HARI: hariK, KELAS: kelasK,
                 JP: r[11] || '', STAT: r[12] || '',
-                AMOUNT: r[13] || '', TOTAL: jp * amount
+                AMOUNT: r[13] || ''
             });
         }
     }
-    return { classes, club };
+    return { classes, club, subtotalClasses, subtotalClub };
 }
 
 function updateStats(jadwal, rekap) {
@@ -376,6 +379,17 @@ function currentFeeData() {
     return sortByTanggalDesc(arr);
 }
 
+function currentSubtotal() {
+    const src = salaryStatus === 'success' ? feeDone : feePending;
+    return salaryKategori === 'classes' ? src.subtotalClasses : src.subtotalClub;
+}
+
+function isSalaryFilterActive() {
+    const from = $('salFrom') ? $('salFrom').value : '';
+    const to = $('salTo') ? $('salTo').value : '';
+    return !!(from || to);
+}
+
 function renderSalary() {
     const list = $('salaryList');
     const empty = $('salaryEmpty');
@@ -385,11 +399,13 @@ function renderSalary() {
     const data = currentFeeData();
     const filtered = filterSalaryByDate(data);
 
+    const total = isSalaryFilterActive()
+        ? filtered.reduce((s, r) => s + num(r.AMOUNT), 0)
+        : currentSubtotal();
+
     $('salKategoriLabel').textContent = salaryKategori === 'classes' ? 'Classes' : 'Club';
     $('salCount').textContent = filtered.length + ' data';
-    $('salTotal').textContent = formatRpFull(
-        filtered.reduce((s, r) => s + num(r.TOTAL), 0) || 0
-    );
+    $('salTotal').textContent = formatRpFull(total);
 
     if (!filtered.length) {
         wrap.hidden = true;
@@ -614,7 +630,10 @@ function handlePrint() {
     const data = filterSalaryByDate(currentFeeData());
     const label = salaryKategori === 'classes' ? 'Classes' : 'Club';
     const statusLabel = salaryStatus === 'success' ? 'SUCCESS' : 'PENDING';
-    const total = data.reduce((s, r) => s + num(r.TOTAL), 0);
+
+    const total = isSalaryFilterActive()
+        ? data.reduce((s, r) => s + num(r.AMOUNT), 0)
+        : currentSubtotal();
 
     const today = new Date();
     const tanggalCetak = today.toLocaleDateString('id-ID', {
@@ -638,17 +657,14 @@ function handlePrint() {
 
     let rowsHtml = '';
     for (const r of data) {
-        const jp = num(r.JP);
-        const amount = num(r.AMOUNT);
-        const lineTotal = jp * amount;
         rowsHtml += `
             <tr>
                 <td>${escapeHtml(r.TANGGAL)}</td>
                 <td>${escapeHtml(r.HARI)}</td>
                 <td>${escapeHtml(r.KELAS)}</td>
-                <td>${jp || '-'}</td>
+                <td>${escapeHtml(r.JP) || '-'}</td>
                 <td>${formatRpShort(r.AMOUNT)}</td>
-                <td>${lineTotal ? formatRpShort(lineTotal) : '-'}</td>
+                <td>${formatRpShort(r.AMOUNT)}</td>
             </tr>`;
     }
 
