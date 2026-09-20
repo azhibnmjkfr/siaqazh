@@ -355,8 +355,8 @@ function renderRekap() {
                 <div class="cell-num">${total}</div>
                 <div class="cell-num">${num(r['REGULER'])}</div>
                 <div class="cell-num">${num(r['CLUB'])}</div>
-                <div class="cell-badge"><span class="badge success">${success}</span></div>
-                <div class="cell-badge"><span class="badge pending">${pending}</span></div>
+                <div class="cell-badge success"><span class="badge success">${success}</span></div>
+                <div class="cell-badge pending"><span class="badge pending">${pending}</span></div>
                 <div class="cell-arrow"><i data-lucide="chevron-right"></i></div>
             </div>`;
     }).join('');
