@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta name="theme-color" content="#FFFFFF" />
+    <meta name="theme-color" content="#0E2238" />
     <meta name="description" content="Rekap kegiatan mengajar Ahmad Zaman Huri — Sekolah Islam Akhlaqul Quran, 2026/2027." />
     <title>Rekap Mengajar — SIAQ</title>
 
@@ -97,13 +97,46 @@
             </div>
 
             <div class="mh-quick">
-                <a href="#salary" class="mh-quick-card" data-nav="salary">
-                    <span class="mh-quick-label">Salary</span>
-                    <span class="mh-quick-cta">Lihat detail fee →</span>
+                <div class="mh-quick-title">Menu Utama</div>
+                <a href="#semua" class="mh-quick-card" data-nav="semua">
+                    <span class="mh-quick-num">01</span>
+                    <div class="mh-quick-text">
+                        <span class="mh-quick-label">Semua</span>
+                        <span class="mh-quick-cta">Seluruh jadwal mengajar</span>
+                    </div>
+                    <i data-lucide="chevron-right" class="mh-quick-arrow"></i>
+                </a>
+                <a href="#reguler" class="mh-quick-card" data-nav="reguler">
+                    <span class="mh-quick-num">02</span>
+                    <div class="mh-quick-text">
+                        <span class="mh-quick-label">Reguler</span>
+                        <span class="mh-quick-cta">Jadwal kelas reguler</span>
+                    </div>
+                    <i data-lucide="chevron-right" class="mh-quick-arrow"></i>
+                </a>
+                <a href="#club" class="mh-quick-card" data-nav="club">
+                    <span class="mh-quick-num">03</span>
+                    <div class="mh-quick-text">
+                        <span class="mh-quick-label">Club</span>
+                        <span class="mh-quick-cta">Kegiatan club</span>
+                    </div>
+                    <i data-lucide="chevron-right" class="mh-quick-arrow"></i>
                 </a>
                 <a href="#rekap" class="mh-quick-card" data-nav="rekap">
-                    <span class="mh-quick-label">Rekap</span>
-                    <span class="mh-quick-cta">Ringkasan per bulan →</span>
+                    <span class="mh-quick-num">04</span>
+                    <div class="mh-quick-text">
+                        <span class="mh-quick-label">Rekap</span>
+                        <span class="mh-quick-cta">Ringkasan per bulan</span>
+                    </div>
+                    <i data-lucide="chevron-right" class="mh-quick-arrow"></i>
+                </a>
+                <a href="#salary" class="mh-quick-card" data-nav="salary">
+                    <span class="mh-quick-num">05</span>
+                    <div class="mh-quick-text">
+                        <span class="mh-quick-label">Salary</span>
+                        <span class="mh-quick-cta">Detail fee success &amp; pending</span>
+                    </div>
+                    <i data-lucide="chevron-right" class="mh-quick-arrow"></i>
                 </a>
             </div>
         </section>
@@ -146,7 +179,7 @@
                     <div class="filter-field">
                         <label for="filterSemua">Periode</label>
                         <select class="field-select" id="filterSemua">
-                            <option value="">Pilih bulan</option>
+                            <option value="all">Semua bulan</option>
                         </select>
                     </div>
                     <div class="filter-field">
@@ -159,6 +192,7 @@
                     </div>
                     <button class="btn-ghost" id="resetSemua">Reset</button>
                 </div>
+                <div class="table-caption" id="captionSemua"></div>
                 <div class="data-table" id="tableSemuaWrap" hidden>
                     <div class="data-head">
                         <div class="col col-date">Tanggal</div>
@@ -169,9 +203,9 @@
                     </div>
                     <div class="data-body" id="tableSemua"></div>
                 </div>
-                <div class="empty" id="emptySemua">
-                    <div class="empty-title">Pilih periode</div>
-                    <div class="empty-desc">Pilih bulan atau rentang tanggal untuk menampilkan jadwal.</div>
+                <div class="empty" id="emptySemua" hidden>
+                    <div class="empty-title">Tidak ada data</div>
+                    <div class="empty-desc">Belum ada jadwal pada filter ini.</div>
                 </div>
             </section>
 
@@ -180,7 +214,7 @@
                     <div class="filter-field">
                         <label for="filterReguler">Periode</label>
                         <select class="field-select" id="filterReguler">
-                            <option value="">Pilih bulan</option>
+                            <option value="all">Semua bulan</option>
                         </select>
                     </div>
                     <div class="filter-field">
@@ -193,6 +227,7 @@
                     </div>
                     <button class="btn-ghost" id="resetReguler">Reset</button>
                 </div>
+                <div class="table-caption" id="captionReguler"></div>
                 <div class="data-table" id="tableRegulerWrap" hidden>
                     <div class="data-head">
                         <div class="col col-date">Tanggal</div>
@@ -203,9 +238,9 @@
                     </div>
                     <div class="data-body" id="tableReguler"></div>
                 </div>
-                <div class="empty" id="emptyReguler">
-                    <div class="empty-title">Pilih periode</div>
-                    <div class="empty-desc">Pilih bulan atau rentang tanggal untuk menampilkan jadwal reguler.</div>
+                <div class="empty" id="emptyReguler" hidden>
+                    <div class="empty-title">Tidak ada data</div>
+                    <div class="empty-desc">Belum ada jadwal reguler pada filter ini.</div>
                 </div>
             </section>
 
@@ -214,7 +249,7 @@
                     <div class="filter-field">
                         <label for="filterClub">Periode</label>
                         <select class="field-select" id="filterClub">
-                            <option value="">Pilih bulan</option>
+                            <option value="all">Semua bulan</option>
                         </select>
                     </div>
                     <div class="filter-field">
@@ -227,6 +262,7 @@
                     </div>
                     <button class="btn-ghost" id="resetClub">Reset</button>
                 </div>
+                <div class="table-caption" id="captionClub"></div>
                 <div class="data-table" id="tableClubWrap" hidden>
                     <div class="data-head">
                         <div class="col col-date">Tanggal</div>
@@ -237,9 +273,9 @@
                     </div>
                     <div class="data-body" id="tableClub"></div>
                 </div>
-                <div class="empty" id="emptyClub">
-                    <div class="empty-title">Pilih periode</div>
-                    <div class="empty-desc">Pilih bulan atau rentang tanggal untuk menampilkan jadwal club.</div>
+                <div class="empty" id="emptyClub" hidden>
+                    <div class="empty-title">Tidak ada data</div>
+                    <div class="empty-desc">Belum ada jadwal club pada filter ini.</div>
                 </div>
             </section>
 
