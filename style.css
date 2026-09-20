@@ -34,7 +34,6 @@
 
     --nav-h: 60px;
     --max-w: 1080px;
-    --header-h: 76px;
 }
 
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -65,9 +64,7 @@ body {
 img, svg { display: block; max-width: 100%; }
 button { font: inherit; color: inherit; }
 
-/* ============================================================
-   LOADING
-   ============================================================ */
+/* LOADING */
 #loadingScreen {
     position: fixed;
     inset: 0;
@@ -92,7 +89,6 @@ button { font: inherit; color: inherit; }
     align-items: center;
     text-align: center;
 }
-
 .seal {
     position: relative;
     width: 220px;
@@ -168,7 +164,6 @@ button { font: inherit; color: inherit; }
     border-radius: var(--r-pill);
     border: 1px solid rgba(184, 137, 62, 0.35);
 }
-
 .loading-stage-line {
     display: flex;
     align-items: center;
@@ -191,7 +186,6 @@ button { font: inherit; color: inherit; }
     white-space: nowrap;
     transition: color 0.3s;
 }
-
 .loading-meta { display: flex; flex-direction: column; gap: 4px; }
 .meta-name {
     font-size: 13px;
@@ -205,7 +199,6 @@ button { font: inherit; color: inherit; }
     text-transform: uppercase;
     color: rgba(255, 255, 255, 0.40);
 }
-
 .loading-error {
     margin-top: 28px;
     padding: 20px;
@@ -228,7 +221,6 @@ button { font: inherit; color: inherit; }
     transition: background 0.25s, color 0.25s, border-color 0.25s;
 }
 .loading-error-retry:hover { background: var(--accent); color: #0E2238; border-color: var(--accent); }
-
 #loadingScreen.is-error .seal-progress {
     stroke: var(--danger);
     filter: drop-shadow(0 0 6px rgba(248, 113, 113, 0.6));
@@ -239,9 +231,7 @@ button { font: inherit; color: inherit; }
 }
 #loadingScreen.is-error .stage-text { color: rgba(255, 255, 255, 0.5); }
 
-/* ============================================================
-   HEADER — sticky + blur
-   ============================================================ */
+/* HEADER */
 .header {
     position: sticky;
     top: 0;
@@ -252,7 +242,6 @@ button { font: inherit; color: inherit; }
     background: rgba(14, 34, 56, 0.72);
     -webkit-backdrop-filter: saturate(160%) blur(14px);
     backdrop-filter: saturate(160%) blur(14px);
-    transition: background 0.3s var(--ease), border-color 0.3s var(--ease);
 }
 .header::after {
     content: '';
@@ -306,7 +295,6 @@ button { font: inherit; color: inherit; }
 }
 .header-back i, .header-back svg { width: 16px; height: 16px; }
 .header-back[hidden] { display: none; }
-
 .header-brand {
     display: flex;
     align-items: center;
@@ -353,7 +341,6 @@ button { font: inherit; color: inherit; }
     text-overflow: ellipsis;
 }
 .meta-sep { color: var(--accent); }
-
 .profile-btn {
     width: 40px;
     height: 40px;
@@ -369,9 +356,6 @@ button { font: inherit; color: inherit; }
 .profile-btn:hover { border-color: var(--accent); transform: scale(1.04); }
 .profile-btn img { width: 100%; height: 100%; object-fit: cover; }
 
-/* ============================================================
-   CONTAINER
-   ============================================================ */
 .container {
     max-width: var(--max-w);
     width: 100%;
@@ -380,9 +364,7 @@ button { font: inherit; color: inherit; }
 
 .mobile-home { display: none; }
 
-/* ============================================================
-   STATS DESKTOP
-   ============================================================ */
+/* STATS */
 .stats-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -424,9 +406,7 @@ button { font: inherit; color: inherit; }
 .stat-card.is-success .stat-value { color: var(--success); }
 .stat-card.is-pending .stat-value { color: var(--pending); }
 
-/* ============================================================
-   TABS
-   ============================================================ */
+/* TABS */
 .tabs {
     display: flex;
     gap: 2px;
@@ -467,9 +447,7 @@ button { font: inherit; color: inherit; }
 }
 .tab.active::after { transform: scaleX(1); }
 
-/* ============================================================
-   FILTER
-   ============================================================ */
+/* FILTER */
 .filter-bar {
     display: flex;
     flex-wrap: wrap;
@@ -510,7 +488,6 @@ button { font: inherit; color: inherit; }
 .field-select:hover,
 .field-select:focus { outline: none; border-color: var(--accent); }
 .field-select option { background: var(--bg-2); color: var(--ink); }
-
 .date-range { display: flex; align-items: center; gap: 8px; }
 .field-date {
     padding: 8px 12px;
@@ -541,7 +518,6 @@ button { font: inherit; color: inherit; }
     transition: background 0.2s, color 0.2s, border-color 0.2s;
 }
 .btn-ghost:hover { background: var(--bg-4); border-color: var(--accent); color: var(--ink); }
-
 .btn-primary {
     display: inline-flex;
     align-items: center;
@@ -558,12 +534,8 @@ button { font: inherit; color: inherit; }
 }
 .btn-primary:hover { background: var(--accent-2); border-color: var(--accent-2); transform: translateY(-1px); }
 .btn-primary i { width: 14px; height: 14px; }
-
 .filter-bar .btn-ghost { margin-left: auto; }
 
-/* ============================================================
-   CAPTION
-   ============================================================ */
 .table-caption {
     font-family: 'Geist Mono', monospace;
     font-size: 10px;
@@ -586,9 +558,7 @@ button { font: inherit; color: inherit; }
     flex-shrink: 0;
 }
 
-/* ============================================================
-   DATA TABLE
-   ============================================================ */
+/* DATA TABLE */
 .data-table {
     border: 1px solid var(--line);
     border-radius: var(--r-md);
@@ -596,7 +566,6 @@ button { font: inherit; color: inherit; }
     background: var(--bg-3);
 }
 .data-table[hidden] { display: none; }
-
 .data-head,
 .data-row {
     display: grid;
@@ -605,7 +574,6 @@ button { font: inherit; color: inherit; }
     gap: 16px;
     padding: 0 20px;
 }
-
 .data-head {
     background: var(--bg-4);
     border-bottom: 1px solid var(--line);
@@ -622,13 +590,10 @@ button { font: inherit; color: inherit; }
     grid-template-columns: 1.4fr 80px 80px 70px 90px 90px 40px;
 }
 .data-head.rekap-head .col-num { text-align: right; }
-
 .col { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .col-num { text-align: right; }
 .col-arrow { text-align: right; }
-
 .data-body { display: flex; flex-direction: column; }
-
 .data-row {
     padding-top: 18px;
     padding-bottom: 18px;
@@ -650,7 +615,6 @@ button { font: inherit; color: inherit; }
     transition: transform 0.3s var(--ease);
 }
 .data-row:hover::before { transform: scaleY(1); }
-
 .data-row .cell-date {
     font-family: 'Geist Mono', monospace;
     font-size: 13.5px;
@@ -708,8 +672,6 @@ button { font: inherit; color: inherit; }
     color: var(--ink);
 }
 .data-row.rekap-row .cell-badge { justify-self: end; }
-.data-row.rekap-row .cell-badge.success,
-.data-row.rekap-row .cell-badge.pending { justify-self: end; }
 
 .badge {
     display: inline-flex;
@@ -725,9 +687,7 @@ button { font: inherit; color: inherit; }
 .badge.success { background: var(--success-soft); color: var(--success); border: 1px solid rgba(74, 222, 128, 0.35); }
 .badge.pending { background: var(--pending-soft); color: var(--pending); border: 1px solid rgba(245, 167, 66, 0.35); }
 
-/* ============================================================
-   SALARY
-   ============================================================ */
+/* SALARY */
 .salary-controls {
     display: flex;
     flex-wrap: wrap;
@@ -770,7 +730,6 @@ button { font: inherit; color: inherit; }
 }
 .dd-trigger i { width: 14px; height: 14px; color: var(--ink-3); transition: transform 0.25s var(--ease); }
 .salary-dropdown.open .dd-trigger i { transform: rotate(180deg); }
-
 .dd-menu {
     position: absolute;
     top: calc(100% + 6px);
@@ -804,7 +763,6 @@ button { font: inherit; color: inherit; }
 }
 .dd-item:hover { background: var(--bg-4); color: var(--ink); }
 .dd-item.active { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
-
 .salary-range { display: flex; flex-direction: column; gap: 6px; }
 .salary-range::before {
     content: 'Rentang Tanggal';
@@ -815,14 +773,12 @@ button { font: inherit; color: inherit; }
     text-transform: uppercase;
     letter-spacing: 0.16em;
 }
-
 .salary-actions {
     display: flex;
     align-items: center;
     gap: 10px;
     margin-left: auto;
 }
-
 .salary-summary {
     display: grid;
     grid-template-columns: 1fr 1fr 1.4fr;
@@ -857,9 +813,6 @@ button { font: inherit; color: inherit; }
 }
 .sal-sum-total .sal-sum-value { color: var(--accent); font-size: 22px; }
 
-/* ============================================================
-   EMPTY
-   ============================================================ */
 .empty {
     text-align: center;
     padding: 60px 24px;
@@ -871,9 +824,6 @@ button { font: inherit; color: inherit; }
 .empty-title { font-size: 14px; font-weight: 600; color: var(--ink-2); margin-bottom: 4px; }
 .empty-desc { font-size: 12.5px; color: var(--ink-3); line-height: 1.6; max-width: 320px; margin: 0 auto; }
 
-/* ============================================================
-   LOADING INLINE
-   ============================================================ */
 .data-loading {
     padding: 40px 20px;
     text-align: center;
@@ -895,9 +845,7 @@ button { font: inherit; color: inherit; }
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* ============================================================
-   MODAL
-   ============================================================ */
+/* MODAL */
 .modal {
     position: fixed;
     inset: 0;
@@ -914,7 +862,6 @@ button { font: inherit; color: inherit; }
     transition: opacity 0.3s var(--ease), visibility 0.3s;
 }
 .modal.open { opacity: 1; visibility: visible; }
-
 .modal-box {
     background: var(--bg-3);
     border: 1px solid var(--line-2);
@@ -931,7 +878,6 @@ button { font: inherit; color: inherit; }
     overflow-y: auto;
 }
 .modal.open .modal-box { transform: scale(1); opacity: 1; }
-
 .modal-close {
     position: absolute;
     top: 14px;
@@ -950,7 +896,6 @@ button { font: inherit; color: inherit; }
 }
 .modal-close:hover { color: var(--accent); background: var(--accent-soft); transform: rotate(90deg); }
 .modal-close i, .modal-close svg { width: 16px; height: 16px; }
-
 .modal-head { margin-bottom: 20px; padding-right: 36px; }
 .modal-eyebrow {
     font-family: 'Geist Mono', monospace;
@@ -967,7 +912,6 @@ button { font: inherit; color: inherit; }
     letter-spacing: -0.02em;
     color: var(--ink);
 }
-
 .modal-list { display: flex; flex-direction: column; }
 .modal-row {
     display: flex;
@@ -1009,7 +953,6 @@ button { font: inherit; color: inherit; }
 .modal-row-total.is-success strong { color: var(--success); }
 .modal-row-total.is-pending span,
 .modal-row-total.is-pending strong { color: var(--pending); }
-
 .modal-section-title {
     font-family: 'Geist Mono', monospace;
     font-size: 10px;
@@ -1022,7 +965,6 @@ button { font: inherit; color: inherit; }
 }
 .modal-section-title.is-success { color: var(--success); border-top: none; margin-top: 0; padding-top: 0; }
 .modal-section-title.is-pending { color: var(--pending); }
-
 .modal-profile { text-align: center; max-width: 400px; }
 .profile-avatar-lg {
     width: 84px;
@@ -1069,9 +1011,7 @@ button { font: inherit; color: inherit; }
 }
 .profile-wa { margin-top: 20px; width: 100%; justify-content: center; padding: 12px 20px; }
 
-/* ============================================================
-   GO TOP
-   ============================================================ */
+/* GO TOP */
 .go-top {
     position: fixed;
     bottom: 28px;
@@ -1097,9 +1037,6 @@ button { font: inherit; color: inherit; }
 .go-top:hover { background: var(--accent); border-color: var(--accent); color: #0E2238; }
 .go-top i, .go-top svg { width: 17px; height: 17px; }
 
-/* ============================================================
-   FOOTER
-   ============================================================ */
 .footer-credit {
     text-align: center;
     margin-top: 64px;
@@ -1179,14 +1116,11 @@ button { font: inherit; color: inherit; }
     * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 }
 
-/* ============================================================
-   MOBILE — ≤ 768px
-   ============================================================ */
+/* MOBILE */
 @media (max-width: 768px) {
     body {
         padding-bottom: calc(var(--nav-h) + env(safe-area-inset-bottom));
     }
-
     .header { margin-bottom: 12px; }
     .header-inner { padding: 12px 20px; gap: 12px; }
     .header-left { gap: 10px; }
@@ -1384,29 +1318,33 @@ button { font: inherit; color: inherit; }
         justify-self: end;
     }
 
-    /* Rekap mobile — teks Success/Pending */
+    /* Rekap mobile — simple: Success X · Pending Y */
     .data-row.rekap-row {
         grid-template-columns: 1fr auto;
         grid-template-areas:
             "period   arrow"
             "meta     meta";
-        gap: 8px 12px;
+        gap: 6px 12px;
         padding: 16px 18px;
     }
     .data-row.rekap-row .cell-period {
         grid-area: period;
         font-size: 14px;
-        margin-bottom: 0;
     }
     .data-row.rekap-row .cell-num { display: none; }
+
     .data-row.rekap-row .cell-badge {
         grid-area: meta;
-        justify-self: start;
         display: inline-flex;
         align-items: center;
-        gap: 6px;
+        padding: 0;
+        background: transparent;
+        border: none;
+        justify-self: auto;
     }
-    .data-row.rekap-row .cell-badge.success { margin-right: 12px; }
+    .data-row.rekap-row .cell-badge + .cell-badge {
+        margin-left: 16px;
+    }
     .data-row.rekap-row .cell-badge.success::before {
         content: 'Success';
         font-family: 'Geist Mono', monospace;
@@ -1415,6 +1353,7 @@ button { font: inherit; color: inherit; }
         color: var(--ink-3);
         text-transform: uppercase;
         letter-spacing: 0.1em;
+        margin-right: 6px;
     }
     .data-row.rekap-row .cell-badge.pending::before {
         content: 'Pending';
@@ -1424,6 +1363,7 @@ button { font: inherit; color: inherit; }
         color: var(--ink-3);
         text-transform: uppercase;
         letter-spacing: 0.1em;
+        margin-right: 6px;
     }
     .data-row.rekap-row .cell-arrow { grid-area: arrow; }
 
@@ -1490,7 +1430,6 @@ button { font: inherit; color: inherit; }
         font-size: 9px;
         letter-spacing: 0.2em;
     }
-
     .go-top {
         bottom: calc(var(--nav-h) + 16px + env(safe-area-inset-bottom));
         right: 16px;
