@@ -64,9 +64,7 @@ body {
 img, svg { display: block; max-width: 100%; }
 button { font: inherit; color: inherit; }
 
-/* ============================================================
-   LOADING — SEAL
-   ============================================================ */
+/* LOADING */
 #loadingScreen {
     position: fixed;
     inset: 0;
@@ -238,9 +236,7 @@ button { font: inherit; color: inherit; }
 }
 #loadingScreen.is-error .stage-text { color: rgba(255, 255, 255, 0.5); }
 
-/* ============================================================
-   HEADER
-   ============================================================ */
+/* HEADER */
 .header {
     width: 100%;
     max-width: var(--max-w);
@@ -303,9 +299,7 @@ button { font: inherit; color: inherit; }
 .profile-btn:hover { border-color: var(--accent); transform: scale(1.04); }
 .profile-btn img { width: 100%; height: 100%; object-fit: cover; }
 
-/* ============================================================
-   CONTAINER
-   ============================================================ */
+/* CONTAINER */
 .container {
     max-width: var(--max-w);
     width: 100%;
@@ -314,9 +308,7 @@ button { font: inherit; color: inherit; }
 
 .mobile-home { display: none; }
 
-/* ============================================================
-   STATS (desktop)
-   ============================================================ */
+/* STATS DESKTOP */
 .stats-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -358,9 +350,7 @@ button { font: inherit; color: inherit; }
 .stat-card.is-success .stat-value { color: var(--success); }
 .stat-card.is-pending .stat-value { color: var(--pending); }
 
-/* ============================================================
-   TABS
-   ============================================================ */
+/* TABS */
 .tabs {
     display: flex;
     gap: 2px;
@@ -401,9 +391,7 @@ button { font: inherit; color: inherit; }
 }
 .tab.active::after { transform: scaleX(1); }
 
-/* ============================================================
-   FILTER BAR
-   ============================================================ */
+/* FILTER */
 .filter-bar {
     display: flex;
     flex-wrap: wrap;
@@ -495,9 +483,30 @@ button { font: inherit; color: inherit; }
 
 .filter-bar .btn-ghost { margin-left: auto; }
 
-/* ============================================================
-   DATA TABLE (grid murni)
-   ============================================================ */
+/* CAPTION */
+.table-caption {
+    font-family: 'Geist Mono', monospace;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    padding: 0 4px 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 22px;
+}
+.table-caption::before {
+    content: '';
+    width: 3px;
+    height: 12px;
+    background: var(--accent);
+    border-radius: 2px;
+    flex-shrink: 0;
+}
+
+/* DATA TABLE */
 .data-table {
     border: 1px solid var(--line);
     border-radius: var(--r-md);
@@ -632,9 +641,7 @@ button { font: inherit; color: inherit; }
 .badge.success { background: var(--success-soft); color: var(--success); border: 1px solid rgba(74, 222, 128, 0.35); }
 .badge.pending { background: var(--pending-soft); color: var(--pending); border: 1px solid rgba(245, 167, 66, 0.35); }
 
-/* ============================================================
-   SALARY CONTROLS
-   ============================================================ */
+/* SALARY */
 .salary-controls {
     display: flex;
     flex-wrap: wrap;
@@ -764,9 +771,7 @@ button { font: inherit; color: inherit; }
 }
 .sal-sum-total .sal-sum-value { color: var(--accent); font-size: 22px; }
 
-/* ============================================================
-   EMPTY
-   ============================================================ */
+/* EMPTY */
 .empty {
     text-align: center;
     padding: 60px 24px;
@@ -778,9 +783,7 @@ button { font: inherit; color: inherit; }
 .empty-title { font-size: 14px; font-weight: 600; color: var(--ink-2); margin-bottom: 4px; }
 .empty-desc { font-size: 12.5px; color: var(--ink-3); line-height: 1.6; max-width: 320px; margin: 0 auto; }
 
-/* ============================================================
-   LOADING INLINE
-   ============================================================ */
+/* LOADING INLINE */
 .data-loading {
     padding: 40px 20px;
     text-align: center;
@@ -802,9 +805,7 @@ button { font: inherit; color: inherit; }
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* ============================================================
-   MODAL
-   ============================================================ */
+/* MODAL */
 .modal {
     position: fixed;
     inset: 0;
@@ -976,9 +977,7 @@ button { font: inherit; color: inherit; }
 }
 .profile-wa { margin-top: 20px; width: 100%; justify-content: center; padding: 12px 20px; }
 
-/* ============================================================
-   GO TOP
-   ============================================================ */
+/* GO TOP */
 .go-top {
     position: fixed;
     bottom: 28px;
@@ -1004,9 +1003,7 @@ button { font: inherit; color: inherit; }
 .go-top:hover { background: var(--accent); border-color: var(--accent); color: #0E2238; }
 .go-top i, .go-top svg { width: 17px; height: 17px; }
 
-/* ============================================================
-   FOOTER
-   ============================================================ */
+/* FOOTER */
 .footer-credit {
     text-align: center;
     margin-top: 64px;
@@ -1019,14 +1016,7 @@ button { font: inherit; color: inherit; }
     text-transform: uppercase;
 }
 
-/* ============================================================
-   BOTTOM NAV (mobile)
-   ============================================================ */
 .bottom-nav { display: none; }
-
-/* ============================================================
-   PRINT
-   ============================================================ */
 #printArea { display: none; }
 
 @media print {
@@ -1093,9 +1083,7 @@ button { font: inherit; color: inherit; }
     * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 }
 
-/* ============================================================
-   MOBILE — ≤ 768px
-   ============================================================ */
+/* MOBILE */
 @media (max-width: 768px) {
     body {
         padding-bottom: calc(var(--nav-h) + env(safe-area-inset-bottom));
@@ -1180,35 +1168,69 @@ button { font: inherit; color: inherit; }
     .mh-quick {
         display: flex;
         flex-direction: column;
-        gap: 10px;
+        gap: 8px;
         margin-top: auto;
+    }
+    .mh-quick-title {
+        font-family: 'Geist Mono', monospace;
+        font-size: 9.5px;
+        font-weight: 600;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--ink-3);
+        padding: 0 4px 6px;
     }
     .mh-quick-card {
         display: flex;
-        flex-direction: column;
-        gap: 4px;
-        padding: 20px 20px;
+        align-items: center;
+        gap: 14px;
+        padding: 16px 16px;
         background: var(--bg-3);
         border: 1px solid var(--line);
         border-radius: var(--r-md);
         text-decoration: none;
         color: inherit;
-        transition: background 0.2s, border-color 0.2s;
+        transition: background 0.2s, border-color 0.2s, transform 0.2s var(--ease);
     }
-    .mh-quick-card:active { background: var(--bg-4); border-color: var(--accent); }
+    .mh-quick-card:active {
+        background: var(--bg-4);
+        border-color: var(--accent);
+        transform: scale(0.98);
+    }
+    .mh-quick-num {
+        font-family: 'Geist Pixel Square', monospace;
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        color: var(--accent);
+        min-width: 22px;
+    }
+    .mh-quick-text {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        flex: 1;
+        min-width: 0;
+    }
     .mh-quick-label {
-        font-size: 18px;
+        font-size: 15px;
         font-weight: 600;
-        letter-spacing: -0.02em;
+        letter-spacing: -0.01em;
         color: var(--ink);
     }
     .mh-quick-cta {
         font-family: 'Geist Mono', monospace;
-        font-size: 11px;
+        font-size: 10.5px;
         color: var(--ink-3);
-        letter-spacing: 0.04em;
+        letter-spacing: 0.02em;
+    }
+    .mh-quick-arrow {
+        width: 16px;
+        height: 16px;
+        color: var(--ink-4);
+        flex-shrink: 0;
     }
 
+    body[data-view="tab"] .mobile-home { display: none; }
     body[data-view="home"] .content { display: none; }
 
     .filter-bar {
@@ -1222,6 +1244,8 @@ button { font: inherit; color: inherit; }
     .date-range { width: 100%; }
     .field-date { flex: 1; min-width: 0; }
     .filter-bar .btn-ghost { margin-left: 0; width: 100%; }
+
+    .table-caption { padding-top: 4px; }
 
     .data-table { border-radius: var(--r-md); }
     .data-head { display: none; }
@@ -1415,9 +1439,6 @@ button { font: inherit; color: inherit; }
     }
 }
 
-/* ============================================================
-   SMALL MOBILE — ≤ 420px
-   ============================================================ */
 @media (max-width: 420px) {
     .container { padding: 0 16px 40px; }
     .header { padding: 12px 16px 10px; }
@@ -1430,16 +1451,10 @@ button { font: inherit; color: inherit; }
     .modal-title { font-size: 18px; }
 }
 
-/* ============================================================
-   LARGE DESKTOP
-   ============================================================ */
 @media (min-width: 1200px) {
     :root { --max-w: 1120px; }
 }
 
-/* ============================================================
-   REDUCED MOTION
-   ============================================================ */
 @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
         animation-duration: 0.01ms !important;
