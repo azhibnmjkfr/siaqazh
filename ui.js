@@ -1,14 +1,8 @@
-// ============================================================
-// ui.js — interaksi & animasi ringan
-// ============================================================
 (function () {
     'use strict';
 
     const isMobile = () => window.matchMedia('(max-width: 768px)').matches;
 
-    // ------------------------------------------------------------
-    // GREETING
-    // ------------------------------------------------------------
     const heroGreeting = document.getElementById('heroGreeting');
     if (heroGreeting) {
         const hour = new Date().getHours();
@@ -20,9 +14,6 @@
         heroGreeting.textContent = greeting;
     }
 
-    // ------------------------------------------------------------
-    // MOBILE VIEW STATE
-    // ------------------------------------------------------------
     function setView(view) {
         if (!isMobile()) {
             document.body.removeAttribute('data-view');
@@ -33,9 +24,6 @@
     if (isMobile()) setView('home');
     else document.body.removeAttribute('data-view');
 
-    // ------------------------------------------------------------
-    // COUNT-UP STATS
-    // ------------------------------------------------------------
     function animateCountUp(el, target, duration = 900) {
         if (!el || isNaN(target)) return;
         const start = performance.now();
@@ -88,9 +76,6 @@
         obs.observe(grid, { subtree: true, childList: true, characterData: true });
     });
 
-    // ------------------------------------------------------------
-    // STAGGER ROWS
-    // ------------------------------------------------------------
     function applyStagger(container) {
         if (!container || container.dataset.staggered) return;
         const rows = container.querySelectorAll('.data-row');
@@ -119,9 +104,6 @@
         obs.observe(tbody, { childList: true });
     });
 
-    // ------------------------------------------------------------
-    // BOTTOM NAV
-    // ------------------------------------------------------------
     const bottomNav = document.getElementById('bottomNav');
     const navBtns = bottomNav ? bottomNav.querySelectorAll('.bn-btn') : [];
 
@@ -149,24 +131,20 @@
         });
     });
 
-    // ------------------------------------------------------------
-    // QUICK ACCESS (mobile home)
-    // ------------------------------------------------------------
     document.querySelectorAll('.mh-quick-card[data-nav]').forEach(card => {
         card.addEventListener('click', e => {
             e.preventDefault();
             const nav = card.dataset.nav;
             const desktopTab = document.querySelector(`.tab[data-tab="${nav}"]`);
             if (desktopTab) desktopTab.click();
+
             setView('tab');
-            activateNav(nav);
+            if (nav === 'semua') activateNav('home');
+            else activateNav(nav);
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
     });
 
-    // ------------------------------------------------------------
-    // RESIZE
-    // ------------------------------------------------------------
     let resizeTimer;
     window.addEventListener('resize', () => {
         clearTimeout(resizeTimer);
@@ -179,17 +157,15 @@
         }, 200);
     });
 
-    // ------------------------------------------------------------
-    // HASH ROUTING (dari quick access)
-    // ------------------------------------------------------------
     if (location.hash) {
         const nav = location.hash.replace('#', '');
-        if (['reguler', 'club', 'rekap', 'salary'].includes(nav)) {
+        if (['semua', 'reguler', 'club', 'rekap', 'salary'].includes(nav)) {
             setTimeout(() => {
                 const desktopTab = document.querySelector(`.tab[data-tab="${nav}"]`);
                 if (desktopTab) desktopTab.click();
                 setView('tab');
-                activateNav(nav);
+                if (nav === 'semua') activateNav('home');
+                else activateNav(nav);
             }, 100);
         }
     }
