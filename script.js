@@ -13,8 +13,8 @@ const FEE_PENDING_URL = `https://docs.google.com/spreadsheets/d/${CONFIG.SHEET_I
 
 let allJadwal = [];
 let allRekap = [];
-let feeDone = { classes: [], club: [], classesTotal: 0, clubTotal: 0 };
-let feePending = { classes: [], club: [], classesTotal: 0, clubTotal: 0 };
+let feeDone = { classes: [], club: [] };
+let feePending = { classes: [], club: [] };
 let currentTab = 'semua';
 let salaryStatus = 'success';
 let salaryKategori = 'classes';
@@ -175,33 +175,30 @@ async function fetchAll() {
 function extractFee(rows) {
     const classes = [];
     const club = [];
-    let classesTotal = 0;
-    let clubTotal = 0;
-
-    if (rows[0]) {
-        classesTotal = num(rows[0][6]);
-        clubTotal = num(rows[0][14]);
-    }
 
     for (const r of rows) {
         const tglC = r[0] || '', hariC = r[1] || '', kelasC = r[2] || '';
         if (tglC || hariC || kelasC) {
+            const jp = num(r[3]);
+            const amount = num(r[5]);
             classes.push({
                 TANGGAL: tglC, HARI: hariC, KELAS: kelasC,
                 JP: r[3] || '', STAT: r[4] || '',
-                AMOUNT: r[5] || '', TOTAL: r[6] || ''
+                AMOUNT: r[5] || '', TOTAL: jp * amount
             });
         }
         const tglK = r[8] || '', hariK = r[9] || '', kelasK = r[10] || '';
         if (tglK || hariK || kelasK) {
+            const jp = num(r[11]);
+            const amount = num(r[13]);
             club.push({
                 TANGGAL: tglK, HARI: hariK, KELAS: kelasK,
                 JP: r[11] || '', STAT: r[12] || '',
-                AMOUNT: r[13] || '', TOTAL: r[14] || ''
+                AMOUNT: r[13] || '', TOTAL: jp * amount
             });
         }
     }
-    return { classes, club, classesTotal, clubTotal };
+    return { classes, club };
 }
 
 function updateStats(jadwal, rekap) {
